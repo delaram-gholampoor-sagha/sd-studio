@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 	"log"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -56,6 +57,8 @@ func Run() {
 		subscriber,
 		orderHandler.HandleOrder,
 	)
+
+	http.HandleFunc("/orders", orderHandler.HTTPCreateHandle)
 
 	ctx, cancel := context.WithCancel(context.Background())
 
